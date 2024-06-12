@@ -1,4 +1,3 @@
-+++
 # Reproductor de Música con Python y Flet
 <p align="center">
     <a href="https://www.python.org/">
@@ -6,10 +5,7 @@
     </a>
     <a href="https://flet.io/">
         <img src="https://avatars.githubusercontent.com/u/102273996?v=4" alt="Flet Logo" width="100">
-    </a>
-    <a href="https://nestjs.com/">
-        <img src="https://d33wubrfki0l68.cloudfront.net/5f8e18034ab68e00070c7b42/square_512x512/60d7f9a6bb94de9e6b19d58b_logo%20small.png" alt="Nest Logo" width="100">
-    </a>
+    </a>  
 </p>
 <p align="center">
     <a href="https://travis-ci.org/joemccann/dillinger">
@@ -17,11 +13,6 @@
     </a>
     <a href="https://travis-ci.org/joemccann/dillinger">
         <img src="https://travis-ci.org/joemccann/dillinger.svg?branch=master" alt="Build Status">
-    </a>
-    <a href="https://travis-ci.org/joemccann/dillinger">
-        <img src="https://travis-ci.org/joemccann/dillinger.svg?branch=master" alt="Build Status">
-    </a>
-    
     </a>
 </p>
 ## Descripción
