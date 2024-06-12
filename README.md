@@ -1,4 +1,6 @@
-# Reproductor de Música con Python y Flet
+# 🎵 Reproductor MP3 con Flet 🎵
+¡Bienvenido al proyecto de Reproductor MP3! Este es un reproductor MP3 simple pero elegante, construido utilizando el framework Flet, que te permite disfrutar de tus canciones favoritas con una interfaz moderna y limpia. Este proyecto demuestra el poder de Python y Flet para construir aplicaciones de escritorio multiplataforma.
+
 <p align="center">
     <a href="https://www.python.org/">
         <img src="https://th.bing.com/th/id/OIP.EDJ9xoErBbZqK2tExVoJfAAAAA?rs=1&pid=ImgDetMain" alt="Python Logo" width="100">
@@ -15,52 +17,116 @@
         <img src="https://travis-ci.org/joemccann/dillinger.svg?branch=master" alt="Build Status">
     </a>
 </p>
-## Descripción
+## 🌟 Características
 
-Este proyecto es un reproductor de música simple creado con Python y Flet, una biblioteca de interfaz de usuario web para aplicaciones de escritorio. Permite a los usuarios ver una lista de reproducción de canciones disponibles y reproducirlas.
+- 🎶 **Gestión de Playlist**: Añade, elimina y organiza fácilmente tus canciones favoritas.
+- 🖼️ **Visualización de Portadas**: Muestra la portada del álbum para cada canción en tu playlist.
+- 🔊 **Reproducción de Audio**: Reproduce, pausa y salta pistas con controles intuitivos.
+- 🚀 **Multiplataforma**: Funciona sin problemas en Windows, macOS y Linux.
+- 📂 **Estructura de Directorios Simple**: Fácil de navegar y gestionar tus archivos de audio.
 
-## Cómo Empezar
+## 📸 Capturas de Pantalla
+![Captura de Pantalla de Playlist](assets/screenshots/playlist.png)
+![Captura de Pantalla de Canción Actual](assets/screenshots/current_song.png)
 
-### Requisitos
+## 🔧 Instalación
 
-- Python 3.x
-- Flet
+Sigue estos pasos para configurar y ejecutar el proyecto en tu máquina local.
 
-### Instalación
+### Prerrequisitos
 
-1. Clona este repositorio en tu máquina local:
+- Python 3.11 o superior
+- Paquete Flet
 
-   ```bash
-   git clone https://github.com/tu_usuario/reproductor-musica
-   ```
+### Clonar el Repositorio
 
-2. Instala las dependencias utilizando pip:
+```bash
+git clone https://github.com/tuusuario/reproductor-mp3-flet.git
+cd reproductor-mp3-flet
+```
 
-   ```bash
-   pip install flet
-   ```
+### Instalar Dependencias
 
-### Uso
+```bash
+pip install flet
+```
 
-1. Navega hasta el directorio del proyecto:
+### Ejecutar la Aplicación
 
-   ```bash
-   cd reproductor-musica
-   ```
+```bash
+flet run main.py
+```
 
-2. Ejecuta el archivo principal `main.py`:
+## 🗂️ Estructura del Proyecto
 
-   ```bash
-   python main.py
-   ```
+```
+reproductor-mp3-flet/
+├── assets/
+│   ├── images/
+│   │   ├── img0.jpg
+│   │   ├── img1.jpg
+│   │   ├── img2.jpg
+│   └── audio/
+│       ├── cielo.mp3
+│       ├── title.mp3
+│       └── 2.mp3
+├── main.py
+└── README.md
+```
 
-3. Abre tu navegador web y ve a `http://localhost:8000` para acceder al reproductor de música.
+## 📜 Descripción del Código
 
-## Contribuir
+### main.py
 
-Si quieres contribuir a este proyecto, ¡eres bienvenido! Siéntete libre de hacer un fork y enviar pull requests.
+Este es el punto de entrada principal de la aplicación. Define las clases `Song` y `AudioDirectory`, así como las vistas `Playlist` y `CurrentSong`.
 
+### Clase Song
 
+La clase `Song` es una estructura de datos simple que contiene información sobre cada canción, incluyendo el título, el artista, la ruta del archivo de audio y la ruta del archivo de imagen.
 
+### Clase AudioDirectory
 
-+++
+La clase `AudioDirectory` contiene una playlist predefinida. Esto puede extenderse para cargar canciones dinámicamente desde un directorio o base de datos.
+
+### Vista Playlist
+
+La vista `Playlist` muestra la lista de canciones y permite al usuario seleccionar una canción para reproducir.
+
+### Vista CurrentSong
+
+La vista `CurrentSong` muestra la canción que se está reproduciendo actualmente junto con sus detalles y portada.
+
+## 🚀 Uso
+
+1. **Añadir Canciones**: Añade tus archivos MP3 e imágenes correspondientes a los directorios `assets/audio` y `assets/images`, respectivamente.
+2. **Modificar Playlist**: Actualiza la clase `AudioDirectory` en `main.py` para incluir tus nuevas canciones.
+3. **Ejecutar Aplicación**: Inicia la aplicación usando `flet run main.py` y ¡disfruta de tu música!
+
+## 💡 Consejos
+
+- Asegúrate de que tus archivos de audio e imagen estén nombrados adecuadamente para evitar confusiones.
+- Personaliza la interfaz de usuario modificando los componentes de Flet en `main.py` según tus preferencias.
+- Explora la documentación de Flet para obtener más características avanzadas y opciones de personalización.
+
+## 🛠️ Mejoras Futuras
+
+- **Carga Dinámica de Playlists**: Cargar canciones dinámicamente desde un directorio especificado.
+- **Funcionalidad de Búsqueda**: Añadir una barra de búsqueda para encontrar rápidamente canciones en tu playlist.
+- **Ecualizador**: Integrar un ecualizador para ajustar la salida de audio.
+- **Visualización de Letras**: Mostrar las letras de la canción que se está reproduciendo.
+
+## 📬 Contacto
+
+Si tienes alguna pregunta, sugerencia o comentario, no dudes en contactarme en [anperezcue@uide.edu.ec].
+
+## 📜 Licencia
+
+Este proyecto no está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+---
+
+¡Disfruta de tu música! 🎧
+
+---
+
+Siéntete libre de personalizar el contenido y la estructura según sea necesario para que coincida con los detalles y el estilo específicos de tu proyecto. Esta plantilla proporciona una visión general completa para ayudar a los usuarios a entender, instalar y utilizar tu aplicación de reproductor MP3 de manera efectiva.
