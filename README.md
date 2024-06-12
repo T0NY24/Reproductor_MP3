@@ -1,7 +1,8 @@
 # Reproductor_MP3
 Una aplicación de música multiplataforma que utiliza el framework Flet para la interfaz gráfica y para el backend Flask,utilizando el patron de diseño MVC
 
-![Python Logo](assets\Python.jpg) ![Flet Logo](assets\flet.jpg)
+![Python Logo](https://th.bing.com/th/id/OIP.Hb5gNP1ZZhz9AtWqinmCOgHaHa?rs=1&pid=ImgDetMain "Python Logo")
+ 
 
 
 Este es un reproductor de música simple creado con Python y Flet, una biblioteca de interfaz de usuario web para aplicaciones de escritorio. Permite a los usuarios ver una lista de reproducción de canciones disponibles y reproducirlas.
