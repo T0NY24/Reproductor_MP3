@@ -41,7 +41,7 @@ Sigue estos pasos para configurar y ejecutar el proyecto en tu máquina local.
 ### Clonar el Repositorio
 
 ```bash
-git clone https://github.com/tuusuario/reproductor-mp3-flet.git
+git clone https://github.com/T0NY24/Reproductor_MP3.git
 cd reproductor-mp3-flet
 ```
 
@@ -129,4 +129,3 @@ Este proyecto no está licenciado bajo la Licencia MIT. Consulta el archivo [LIC
 
 ---
 
-Siéntete libre de personalizar el contenido y la estructura según sea necesario para que coincida con los detalles y el estilo específicos de tu proyecto. Esta plantilla proporciona una visión general completa para ayudar a los usuarios a entender, instalar y utilizar tu aplicación de reproductor MP3 de manera efectiva.

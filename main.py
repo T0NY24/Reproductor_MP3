@@ -26,7 +26,7 @@ class Playlist(ft.View):
         )
         
         self.page = page
-        self.playlist = AudioDirectory.playlist
+        self.playlist: list[Song] = AudioDirectory.playlist
         self.controls = [
             ft.Row(
                 [ft.Text("Playlist", size=21, weight="bold")],
@@ -61,12 +61,15 @@ class Playlist(ft.View):
             padding=10,
             on_click=self.toggle_song  # Necesitas implementar este método
         )
+        
+
 
     # Método para cambiar la canción
     def toggle_song(self, e):
         e.page.session.set("song", e.control.data)
         self.page.go("/song")
         pass
+
 class CurrentSong(ft.View):
     def __init__(self, page: ft.Page):
         super(CurrentSong, self).__init__(
@@ -75,17 +78,104 @@ class CurrentSong(ft.View):
             padding=20,
             vertical_alignment="center",
         )
-        
+               
         self.page = page
 
-        self.song=self.page.session.get("song")
+        self.song = self.page.session.get("song")
+        self.create_audio_track()
 
-        print(self.song.name, self.song.artist)
-    
+        print(self.song.song_name, self.song.artist_name)
 
+        self.duration: int = 0
+        self.start: int=0
+        self.end: int=0
+
+        self.is_playing: bool = False
+
+        self.txt_start=ft.Text(self.format_time(self.start))
+        self.txt_end=ft.Text(f"-{self.format_time(self.start)}")
+
+        self.slider =ft.slider(
+            min=0,
+            thumb_color="transparent",on_change_end=None)
         
-            
+        self.back_btn=ft.TextButton(
+            content=ft.Text(
+                "Playlist",
+                color="black"
+                if self.page.theme_mode == ft.ThemeMode.LIGHT
+                else "white",
+            ),
+            on_click=self.toogle_playlist,
+        )
+        self.play_btn=self.create_toggle_button(
+            ft.icons.PLAY_ARROW_ROUNDED,2,self.play
+        )
+       # Los controles del Main
+        self.controls=[
+            ft.row(
+                [self.back_btn],
+                alignment="start"
+            ),
+            ft.Container(
+                height=120,
+                expand=True,
+                border_radius=8,
+                shadow=ft.BoxShadow(
+                    spread_radius=6,
+                    blur_radius=10,
+                    color=ft.colors.with_opacity(0.35,"black")
+                ),
+                image_fit="cover",
+                image_src=self.song.path_img,                
+            ),
+            ft.Divider(height=10,color="transparent"),
+            ft.Column(),
+            ft.Divider(height=10,color="transparent"),
+            ft.Row(
+                [
+                    self.create_toggle_button(
+                        ft.icons.REPLAU_10_SHARP,
+                        0.9,
+                        lambda e: self._update_position(-5000)
+                ),
+                    self.play_btn,
+                    self.create_toggle_button(
+                        ft.icons.FORWARD_10_SHARP,
+                        0.9,
+                        lambda e: self._update_position(5000)
+                ),
+            ],
+            alignment="spaceEvenly"
+            ),
+        ft.Divider(height=10,color="transparent"),
 
+        ]
+    
+    def play(self,e):
+        pass
+    def _update_position(self, e):
+        pass
+    def _update(self,delta: int):
+        self.star+=1000
+        self.end-=1000
+
+        self._update_slider(delta)
+    def create_audio_track(self): 
+        self.audio=ft.audio(
+            src=self.song.path_audio,
+            on_position_change=lambda e: self._update(
+                int(e.data)
+            )
+            
+        )
+
+        self.page.overlay.append(self.audio)
+    def create_toggle_button(self,icon,scale,function):
+        return ft.IconButton(
+        on_click=function)
+    def toogle_playlist(self,e):
+        pass
 def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.LIGHT
 
@@ -94,7 +184,7 @@ def main(page: ft.Page):
         if page.route == "/playlist":
             playlist = Playlist
             page.views.append(playlist(page))
-        if page.route =="/song":
+        if page.route == "/song":
             song = CurrentSong(page)
             page.views.append(song)
         
