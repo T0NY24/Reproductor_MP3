@@ -7,14 +7,13 @@ class Song(object):
         self.artist_name = artist_name
         self.audio_path = audio_path
         self.img_path = img_path
-    
 
 # Crear la clase AudioDirectory
 class AudioDirectory(object):
     playlist = [
-        Song("cielo", "mora", "cielo.mp3", "img0.jpg"),
-        Song("title", "Bad Bunny", "title.mp3", "img1.jpg"),
-        Song("Monaco", "Bad Bunny", "2.mp3", "img2.jpg")
+        Song("cielo", "mora", "assets/cielo.mp3", "assets/img0.jpg"),
+        Song("title", "Bad Bunny", "assets/title.mp3", "assets/img1.jpg"),
+        Song("Monaco", "Bad Bunny", "assets/2.mp3", "assets/img2.jpg")
     ]
 
 # Clase para la lista de reproducción
@@ -24,7 +23,7 @@ class Playlist(ft.View):
             route="/playlist",
             horizontal_alignment="center"
         )
-        
+
         self.page = page
         self.playlist: list[Song] = AudioDirectory.playlist
         self.controls = [
@@ -40,7 +39,7 @@ class Playlist(ft.View):
     def generate_playlist_ui(self):
         for song in self.playlist:
             self.controls.append(
-                self.generate_song_row(  # Cambiado de create_song_row a generate_song_row
+                self.generate_song_row(
                     song_name=song.song_name,
                     artist_name=song.artist_name,
                     song=song,
@@ -59,10 +58,8 @@ class Playlist(ft.View):
             ),
             data=song,
             padding=10,
-            on_click=self.toggle_song  # Necesitas implementar este método
+            on_click=self.toggle_song
         )
-        
-
 
     # Método para cambiar la canción
     def toggle_song(self, e):
@@ -78,7 +75,7 @@ class CurrentSong(ft.View):
             padding=20,
             vertical_alignment="center",
         )
-               
+
         self.page = page
 
         self.song = self.page.session.get("song")
@@ -87,33 +84,40 @@ class CurrentSong(ft.View):
         print(self.song.song_name, self.song.artist_name)
 
         self.duration: int = 0
-        self.start: int=0
-        self.end: int=0
+        self.start: int = 0
+        self.end: int = 0
 
         self.is_playing: bool = False
 
-        self.txt_start=ft.Text(self.format_time(self.start))
-        self.txt_end=ft.Text(f"-{self.format_time(self.start)}")
+        self.txt_start = ft.Text(self.format_time(self.start))
+        self.txt_end = ft.Text(f"-{self.format_time(self.duration)}")
 
-        self.slider =ft.slider(
+        self.slider = ft.Slider(
             min=0,
-            thumb_color="transparent",on_change_end=None)
-        
-        self.back_btn=ft.TextButton(
+            max=100,
+            thumb_color="transparent",
+            on_change_end=lambda e: self.toggle_seek(
+                round(float(e.data))
+            )
+        )
+
+        self.back_btn = ft.TextButton(
             content=ft.Text(
                 "Playlist",
                 color="black"
                 if self.page.theme_mode == ft.ThemeMode.LIGHT
                 else "white",
             ),
-            on_click=self.toogle_playlist,
+            on_click=self.toggle_playlist,
         )
-        self.play_btn=self.create_toggle_button(
-            ft.icons.PLAY_ARROW_ROUNDED,2,self.play
+
+        self.play_btn = self.create_toggle_button(
+            ft.icons.PLAY_ARROW_ROUNDED, 2, self.toggle_play_pause
         )
-       # Los controles del Main
-        self.controls=[
-            ft.row(
+
+        # Los controles del Main
+        self.controls = [
+            ft.Row(
                 [self.back_btn],
                 alignment="start"
             ),
@@ -124,70 +128,143 @@ class CurrentSong(ft.View):
                 shadow=ft.BoxShadow(
                     spread_radius=6,
                     blur_radius=10,
-                    color=ft.colors.with_opacity(0.35,"black")
+                    color=ft.colors.with_opacity(0.35, "black")
                 ),
                 image_fit="cover",
-                image_src=self.song.path_img,                
+                image_src=self.song.img_path,
             ),
-            ft.Divider(height=10,color="transparent"),
-            ft.Column(),
-            ft.Divider(height=10,color="transparent"),
+            ft.Divider(height=10, color="transparent"),
+            ft.Column(
+                [
+                    ft.Row([self.txt_start, self.txt_end],
+                           alignment="spaceBetween"),
+                    self.slider,
+                ]
+            ),
+            ft.Divider(height=10, color="transparent"),
             ft.Row(
                 [
                     self.create_toggle_button(
-                        ft.icons.REPLAU_10_SHARP,
+                        ft.icons.REPLAY_10_SHARP,
                         0.9,
                         lambda e: self._update_position(-5000)
-                ),
+                    ),
                     self.play_btn,
                     self.create_toggle_button(
                         ft.icons.FORWARD_10_SHARP,
                         0.9,
                         lambda e: self._update_position(5000)
-                ),
-            ],
-            alignment="spaceEvenly"
+                    ),
+                ],
+                alignment="spaceEvenly"
             ),
-        ft.Divider(height=10,color="transparent"),
-
+            ft.Divider(height=10, color="transparent"),
         ]
-    
-    def play(self,e):
-        pass
-    def _update_position(self, e):
-        pass
-    def _update(self,delta: int):
-        self.star+=1000
-        self.end-=1000
+
+    def play(self, e):
+        self.duration = self.audio.get_duration()
+        self.end = self.duration
+        self.slider.max = self.duration
+        self.audio.play()
+        self.is_playing = True
+        self.play_btn.icon = ft.icons.PAUSE_CIRCLE_ROUNDED
+        self.play_btn.update()
+
+    def toggle_play_pause(self, event=None):
+        if self.is_playing:
+            self.play_btn.icon = ft.icons.PLAY_ARROW_ROUNDED
+            self.audio.pause()
+        else:
+            self.play_btn.icon = ft.icons.PAUSE_CIRCLE_ROUNDED
+            try:
+                self.audio.resume()
+            except Exception:
+                self.audio.play()
+        self.is_playing = not self.is_playing
+        self.play_btn.update()
+
+    def _update_start_end(self):
+        if self.start < 0:
+            self.start = 0
+        if self.end > self.duration:
+            self.end = self.duration
+
+    def _update_position(self, delta: int):
+        self._update_start_end()
+        pos_changed = delta
+        pos: int = (
+            self.start + pos_changed
+        )
+        self.audio.seek(pos)
+        self.start += pos_changed
+        self.end -= pos_changed
+        self._update_slider(self.start)
+
+    def _update_slider(self, delta):
+        self.slider.value = delta
+        self.slider.update()
+
+    def _update_time_stamps(self, start: int, end: int):
+        self.txt_start.text = self.format_time(start)
+        self.txt_end.text = f"-{self.format_time(end)}"
+        self.txt_start.update()
+        self.txt_end.update()
+
+    def toggle_seek(self, delta):
+        self.start = delta
+        self.end = self.duration - delta
+
+        self.audio.seek(self.start)
+        self._update_slider(delta)
+
+    def _update(self, delta: int):
+        self.start = delta
+        self.end = self.duration - delta
 
         self._update_slider(delta)
-    def create_audio_track(self): 
-        self.audio=ft.audio(
-            src=self.song.path_audio,
-            on_position_change=lambda e: self._update(
+        self._update_time_stamps(self.start, self.end)
+
+    def format_time(self, value: int):
+        milliseconds = value
+        minutes, seconds = divmod(milliseconds / 1000, 60)
+        formatted_time = "{:02}:{:02}".format(int(minutes), int(seconds))
+        return formatted_time
+
+    def create_audio_track(self):
+        self.audio = ft.Audio(
+            src=self.song.audio_path,
+            on_position_changed=lambda e: self._update(
                 int(e.data)
             )
-            
         )
 
         self.page.overlay.append(self.audio)
-    def create_toggle_button(self,icon,scale,function):
+
+    def create_toggle_button(self, icon, scale, function):
         return ft.IconButton(
-        on_click=function)
-    def toogle_playlist(self,e):
+            icon=icon,
+            icon_size=scale * 24,
+            on_click=function
+        )
+
+    def toggle_playlist(self, e):
+        self.audio.pause()
+        self.page.session.clear()
+        self.page.go("/playlist")
         pass
+
 def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.LIGHT
 
     def router(route):
-        page.views.clear() 
+        page.views.clear()
         if page.route == "/playlist":
-            playlist = Playlist
-            page.views.append(playlist(page))
+            playlist = Playlist(page)
+            page.views.append(playlist)
         if page.route == "/song":
             song = CurrentSong(page)
             page.views.append(song)
-        
+
         page.update()
 
     page.on_route_change = router
