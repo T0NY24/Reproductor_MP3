@@ -3,7 +3,7 @@
 
 <p align="center">
     <a href="https://www.python.org/">
-        <img src="https://miro.medium.com/v2/resize:fit:640/1*dKU4uBSnJCs4jzkkuiALoQ.png" alt="Python Logo" width="200">
+        <img src="https://miro.medium.com/v2/resize:fit:640/1*dKU4uBSnJCs4jzkkuiALoQ.png" alt="Python Logo" width="150">
     </a>
     <a href="https://flet.io/">
         <img src="https://avatars.githubusercontent.com/u/102273996?v=4" alt="Flet Logo" width="100">
