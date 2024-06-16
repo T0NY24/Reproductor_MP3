@@ -3,11 +3,12 @@
 
 <p align="center">
     <a href="https://www.python.org/">
-        <img src="https://th.bing.com/th/id/OIP.EDJ9xoErBbZqK2tExVoJfAAAAA?rs=1&pid=ImgDetMain" alt="Python Logo" width="100">
+        <img src="https://miro.medium.com/v2/resize:fit:640/1*dKU4uBSnJCs4jzkkuiALoQ.png" alt="Python Logo" width="100">
     </a>
     <a href="https://flet.io/">
         <img src="https://avatars.githubusercontent.com/u/102273996?v=4" alt="Flet Logo" width="100">
     </a>  
+    
 </p>
 <p align="center">
     <a href="https://travis-ci.org/joemccann/dillinger">
@@ -49,6 +50,13 @@ cd reproductor-mp3-flet
 
 ```bash
 pip install flet
+```
+```bash
+pip install flet flask requests
+```
+```bash
+pip install flask flask_sqlalchemy mysqlclient requests
+
 ```
 
 ### Ejecutar la Aplicación

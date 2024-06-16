@@ -1,11 +1,12 @@
 from flask import Flask, jsonify, request
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from Modelo.song import Song
 
 app = Flask(__name__)
 
 # Configuración de la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://username:password@localhost/musica'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/musica'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
