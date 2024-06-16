@@ -69,17 +69,22 @@ flet run main.py
 
 ```
 reproductor-mp3-flet/
-├── assets/
-│   ├── images/
-│   │   ├── img0.jpg
-│   │   ├── img1.jpg
-│   │   ├── img2.jpg
-│   └── audio/
-│       ├── cielo.mp3
-│       ├── title.mp3
-│       └── 2.mp3
-├── main.py
-└── README.md
+├── controlador/
+│   └── controlador_musica.py
+│
+├── modelo/
+│   └── audio_directory.py
+│   └── song.py
+│
+├── vista/
+│   └── playlist_view.py
+│   └── current_song_view.py
+│
+├── server/
+│   └── app.py
+│
+└── main.py
+
 ```
 
 ## 📜 Descripción del Código
